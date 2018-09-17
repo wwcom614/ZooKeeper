@@ -1,6 +1,10 @@
 学习了ZooKeeper的相关特性、原理、应用场景，搭建并启动ZooKeeper服务端(单机、伪分布式、集群)并熟悉了其配置，
 客户端连接，学习了其常用操作命令及参数(create、get、set、delete)、
-数据版本号(乐观锁)、watcher、Acl、四字命令(需安装nc)等，开始动手编码实践，先实践了ZooKeeper原生的API。
+数据版本号(乐观锁)、watcher、Acl、四字命令(需安装nc)等，开始动手编码实践。  
+先实践了ZooKeeper原生的API的增删改查和权限控制，感觉有些常用功能封装不到位。  
+网上搜索发现Apache的curator是其常用客户端解决方案，同样编码实践了其增删改查和权限控制，发现的确解决了
+ZooKeeper原生的API的若干不便处并增强了若干能力，本ReadMe中有总结。  
+最后尝试使用ZooKeeper+ curator实战了配置同步能力和分布式锁能力。  
 
 ## zkAPI 
 学习并实践了ZooKeeper原生的API的常用操作。  
