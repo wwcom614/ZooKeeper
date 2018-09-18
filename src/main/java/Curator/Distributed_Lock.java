@@ -82,7 +82,7 @@ public class Distributed_Lock {
                     log.warn("上次请求会话已断开或上次请求会话已释放分布式锁：" + path);
                     if (path.contains(PARENT_LOCK_PATH)) {
                         waitLockLatch.countDown();
-                        log.warn("释放锁计数器，本次请求尝试获取分布式锁...");
+                        log.warn("释放线程计数器，各线程请求尝试获取分布式锁...");
                     }
                 }
             }
@@ -93,6 +93,7 @@ public class Distributed_Lock {
         //循环尝试获得分布式锁，直到成功获得
         while (true) {
             try {
+                //能成功创建临时节点PARENT_LOCK_PATH + PROJECT1_LOCK_PATH，就是成功获得分布式锁
                 client.create()
                         .creatingParentsIfNeeded()
                         //注意：每个项目的分布式锁需要设置成临时节点，这样该连接断链后，
@@ -106,7 +107,7 @@ public class Distributed_Lock {
             } catch (Exception e) {
                 log.warn("获得分布式锁失败！");
                 try {
-                    //如果没获取到分布式锁，检查CountDownLatch是否需要重新设置
+                    //如果创建临时节点失败，就是没获取到分布式锁，检查CountDownLatch是否需要重新设置
                     if (waitLockLatch.getCount() <= 0) {
                         waitLockLatch = new CountDownLatch(1);
                     }
